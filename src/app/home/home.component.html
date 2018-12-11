@@ -1,127 +1,453 @@
-
 <nav class="navbar navbar-expand-lg navbar-light bg-light">
-    <a class="navbar-brand" href="#"><h3>Work Hours Change</h3></a>
-    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
-      <span class="navbar-toggler-icon"></span>
-    </button>
-  
-    <div class="collapse navbar-collapse" id="navbarSupportedContent">
-      <ul class="navbar-nav mr-auto">
-          <form class="form-inline">
-              <button class="btn btn-sm btn-success" style="background-color: slateblue"  (click)="open()">
-                  <i class="fa fa-plus"></i> New Row   
-              </button>
-              
-            </form>
+  <a class="navbar-brand" href="#">
+    <h2>Work Hours Change</h2>
+  </a>
+  <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent"
+    aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+    <span class="navbar-toggler-icon"></span>
+  </button>
+
+  <div class="collapse navbar-collapse" id="navbarSupportedContent">
+    <ul class="navbar-nav mr-auto">
+      <form class="form-inline">
+        <button class="btn btn-primary" style="background-color: slateblue" (click)="open()">
+          <i class="fa fa-plus"></i>New Agent
+        </button>
+      </form>
+    </ul>
+
+    <div style="margin-right:30%">
+      <div class="row">
+         
+        <div class="col-6">
+          <date-picker (date-selected)="onDateFromSelected($event)" [current-date]="dateFrom">
+          </date-picker>
+        </div>
        
-       
-      
-        <!-- <li class="nav-item dropdown">
-            <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-              Dropdown
-            </a>
-            <div class="dropdown-menu" aria-labelledby="navbarDropdown">
-              <a class="dropdown-item" href="#">Action</a>
-              <a class="dropdown-item" href="#">Another action</a>
-              <div class="dropdown-divider"></div>
-              <a class="dropdown-item" href="#">Something else here</a>
+        <div class="col-6">
+          <div class="row">
+            <div class="col-10">
+              <date-picker (date-selected)="onDateToSelected($event)" [current-date]="dateTo">
+              </date-picker>
             </div>
-          </li> -->
-      </ul>
-      <form class="form-inline my-2 my-lg-0">
-          <button type="submit"class ="btn btn-primary btn-sm" style="background-color:mediumvioletred" (click) = "logOff()">LogOff</button>
-        </form>
+            <div class="col-2">
+              <button class="btn btn-primary " style="background-color: slateblue" (click)="getMonthes()">Get</button>
+            </div>
+          </div>
+
+
+
+        </div>
+      </div>
+
+
+
     </div>
-  </nav>
+
+    <form class="form-inline my-2 my-lg-0">
+      <button type="submit" class="btn btn-primary" style="background-color:slateblue" (click)="logOff()">
+        LogOff
+      </button>
+    </form>
+  </div>
+</nav>
+<hr />
 
 <div class="container-fluid">
+  <div class="row">
+    <div class="col">
+      <div class="row">
+        <div class="col">
+          <div class="rectangle" style="background-color:#299968 ;">&nbsp;</div>
+        </div>
+        <div class="col-12">
+          <div>Növbə Dəyişikliyi</div>
+        </div>
+      </div>
+    </div>
+    <div class="col">
+      <div class="row">
+        <div class="col rectangle">
+          <div class="rectangle" style="background-color:#f70000 ;">&nbsp;</div>
+        </div>
+        <div class="col-12">
+          <div>Xəstəlik</div>
+        </div>
+      </div>
+    </div>
+    <div class="col">
+      <div class="row">
+        <div class="col-2">
+          <div class="rectangle" style="background-color:#f3f700 ;">&nbsp;</div>
+        </div>
+        <div class="col-10">
+          <div>İzin</div>
+        </div>
+      </div>
+    </div>
+    <div class="col">
+      <div class="row">
+        <div class="col-2">
+          <div class="rectangle" style="background-color:#42f448;">&nbsp;</div>
+        </div>
+        <div class="col-10">
+          <div>Qeyri-rəsmi N/D</div>
+        </div>
+      </div>
+    </div>
+    <div class="col">
+      <div class="row">
+        <div class="col-2">
+          <div class="rectangle" style="background-color: #d600f7 ;">&nbsp;</div>
+        </div>
+        <div class="col-10">
+          <div>Məzuniyyət</div>
+        </div>
+      </div>
+    </div>
+    <div class="col">
+      <div class="row">
+        <div class="col-2">
+          <div class="rectangle" style="background-color:#456d9e ;">&nbsp;</div>
+        </div>
+        <div class="col-10">
+          <div>Məzuniyyət (Ödənişsiz)</div>
+        </div>
+      </div>
+    </div>
+    <div class="col">
+      <div class="row">
+        <div class="col-2">
+          <div class="rectangle" style="background-color:#ff7119 ;">&nbsp;</div>
+        </div>
+        <div class="col-10">
+          <div>Təlim</div>
+        </div>
+      </div>
+    </div>
+    <div class="col">
+        <div class="row">
+          <div class="col-2">
+            <div class="rectangle" style="background-color:#827658 ;">&nbsp;</div>
+          </div>
+          <div class="col-10">
+            <div>Eyni Gündə bir neçə səbəb</div>
+          </div>
+        </div>
+      </div>
+      <div class="col">
+          <div class="row">
+            <div class="col-2">
+              <div class="rectangle" style="background-color: #3ba1c6 ;">&nbsp;</div>
+            </div>
+            <div class="col-10">
+              <div>Analıq</div>
+            </div>
+          </div>
+        </div>
+  </div>
+  <div class="row">&nbsp;</div>
  
- <div class="row" >
-<table class="table table-bordered table-responsive">
-    <thead>
-      <tr>
-        <th >#</th>
-        <th> Agents</th>
-        <th >1</th>
-        <th >2</th>
-        <th >3</th>
-        <th >4</th>
-        <th >5</th>
-        <th >6</th>
-        <th >7</th>
-        <th >8</th>
-        <th >9</th>
-        <th >10</th>
-        <th >11</th>
-        <th >12</th>
-        <th >13</th>
-        <th >14</th>
-        <th >15</th>
-        <th >16</th>
-        <th >17</th>
-        <th >18</th>
-        <th >19</th>
-        <th >20</th>
-        <th >21</th>
-        <th >22</th>
-        <th >23</th>
-        <th >24</th>
-        <th >25</th>
-        <th >26</th>
-        <th >27</th>
-        <th >28</th>
-        <th >29</th>
-        <th >30</th>
-        <th >31</th>
-        <th style="width:5px;">Delete row</th>
-      </tr>
-    </thead>
-    <tbody>
-      <tr *ngFor = "let monthlyChange of monthlyChanges;let i=index" >          
-        <th scope="row">{{i+1}}</th>
-        <td style="height:5px">{{monthlyChange.agentId?.name}}</td>
-        <td style="height:5px" (click)="edit(monthlyChange,monthlyChange.day1)">{{monthlyChange.day1?.statusId?.code}}</td>
-        <td style="height:5px" (click)="edit(monthlyChange,monthlyChange.day2)">{{monthlyChange.day2?.statusId?.code}}</td>
-        <td style="height:5px" (click)="edit(monthlyChange,monthlyChange.day3)">{{monthlyChange.day3?.statusId?.code}}</td>
-        <td style="height:5px" (click)="edit(monthlyChange,monthlyChange.day4)">{{monthlyChange.day4?.statusId?.code}}</td>
-        <td style="height:5px" (click)="edit(monthlyChange,monthlyChange.day5)">{{monthlyChange.day5?.statusId?.code}}</td>
-        <td style="height:5px" (click)="edit(monthlyChange,monthlyChange.day6)">{{monthlyChange.day6?.statusId?.code}}</td>
-        <td style="height:5px" (click)="edit(monthlyChange,monthlyChange.day7)">{{monthlyChange.day7?.statusId?.code}}</td>
-        <td style="height:5px" (click)="edit(monthlyChange,monthlyChange.day8)">{{monthlyChange.day8?.statusId?.code}}</td>
-        <td style="height:5px" (click)="edit(monthlyChange,monthlyChange.day9)">{{monthlyChange.day9?.statusId?.code}}</td>
-        <td style="height:5px" (click)="edit(monthlyChange,monthlyChange.day10)">{{monthlyChange.day10?.statusId?.code}}</td>
-        <td style="height:5px" (click)="edit(monthlyChange,monthlyChange.day11)">{{monthlyChange.day11?.statusId?.code}}</td>
-        <td style="height:5px" (click)="edit(monthlyChange,monthlyChange.day12)">{{monthlyChange.day12?.statusId?.code}}</td>
-        <td style="height:5px" (click)="edit(monthlyChange,monthlyChange.day13)">{{monthlyChange.day13?.statusId?.code}}</td>
-        <td style="height:5px" (click)="edit(monthlyChange,monthlyChange.day14)">{{monthlyChange.day14?.statusId?.code}}</td>
-        <td style="height:5px" (click)="edit(monthlyChange,monthlyChange.day15)">{{monthlyChange.day15?.statusId?.code}}</td>
-        <td style="height:5px" (click)="edit(monthlyChange,monthlyChange.day16)">{{monthlyChange.day16?.statusId?.code}}</td>
-        <td style="height:5px" (click)="edit(monthlyChange,monthlyChange.day17)">{{monthlyChange.day17?.statusId?.code}}</td>
-        <td style="height:5px" (click)="edit(monthlyChange,monthlyChange.day18)">{{monthlyChange.day18?.statusId?.code}}</td>
-        <td style="height:5px" (click)="edit(monthlyChange,monthlyChange.day19)">{{monthlyChange.day19?.statusId?.code}}</td>
-        <td style="height:5px" (click)="edit(monthlyChange,monthlyChange.day20)">{{monthlyChange.day20?.statusId?.code}}</td>
-        <td style="height:5px" (click)="edit(monthlyChange,monthlyChange.day21)">{{monthlyChange.day21?.statusId?.code}}</td>
-        <td style="height:5px" (click)="edit(monthlyChange,monthlyChange.day22)">{{monthlyChange.day22?.statusId?.code}}</td>
-        <td style="height:5px" (click)="edit(monthlyChange,monthlyChange.day23)">{{monthlyChange.day23?.statusId?.code}}</td>
-        <td style="height:5px" (click)="edit(monthlyChange,monthlyChange.day24)">{{monthlyChange.day24?.statusId?.code}}</td>
-        <td style="height:5px" (click)="edit(monthlyChange,monthlyChange.day25)">{{monthlyChange.day25?.statusId?.code}}</td>
-        <td style="height:5px" (click)="edit(monthlyChange,monthlyChange.day26)">{{monthlyChange.day26?.statusId?.code}}</td>
-        <td style="height:5px" (click)="edit(monthlyChange,monthlyChange.day27)">{{monthlyChange.day27?.statusId?.code}}</td>
-        <td style="height:5px" (click)="edit(monthlyChange,monthlyChange.day28)">{{monthlyChange.day28?.statusId?.code}}</td>
-        <td style="height:5px" (click)="edit(monthlyChange,monthlyChange.day29)">{{monthlyChange.day29?.statusId?.code}}</td>
-        <td style="height:5px" (click)="edit(monthlyChange,monthlyChange.day30)">{{monthlyChange.day30?.statusId?.code}}</td>
-        <td style="height:5px" (click)="edit(monthlyChange,monthlyChange.day31)">{{monthlyChange.day31?.statusId?.code}}</td>     
-           
-        <td class="text-right" style="width: 150px;height: 90px;">
-        <button class="btn btn-sm" (click) = "deleteMonthlyChange(monthlyChange)" style="background-color: transparent;"><i class="fas fa-trash-alt" style="color: red;"></i></button>
-        </td> 
+  <div class="row">
+    <table class="table table-bordered table-sm table-responsive">
+      <thead>
+        <tr>
+          <th>Agents</th>
+          <th >1</th>
+          <th >2</th>
+          <th >3</th>
+          <th >4</th>
+          <th >5</th>
+          <th >6</th>
+          <th >7</th>
+          <th >8</th>
+          <th >9</th>
+          <th >10</th>
+          <th >11</th>
+          <th >12</th>
+          <th >13</th>
+          <th >14</th>
+          <th >15</th>
+          <th >16</th>
+          <th >17</th>
+          <th >18</th>
+          <th >19</th>
+          <th >20</th>
+          <th >21</th>
+          <th >22</th>
+          <th >23</th>
+          <th >24</th>
+          <th >25</th>
+          <th >26</th>
+          <th >27</th>
+          <th >28</th>
+          <th >29</th>
+          <th >30</th>
+          <th >31</th>
+          <th >Action</th>
+        </tr>
+      </thead>
 
-      </tr>
-      
-    
-    </tbody>
-  </table>
- 
- </div>
-
+      <tbody>
+        <ng-container *ngFor="let monthlyChange of monthlyChanges">
+          <tr *ngIf="monthlyChange.status" >
+            <td  style="width:700px;">{{ monthlyChange.agentId?.name }}</td>
+            <td [ngStyle]="{
+                'background-color': getClassName(
+                  monthlyChange.day1.statusId.code
+                )
+              }"
+              (click)="edit(monthlyChange.day1, monthlyChange)">
+              {{ monthlyChange.day1?.statusId?.code }}
+            </td>
+            <td [ngStyle]="{
+                'background-color': getClassName(
+                  monthlyChange.day2.statusId.code
+                )
+              }"
+              (click)="edit(monthlyChange.day2, monthlyChange)">
+              {{ monthlyChange.day2?.statusId?.code }}
+            </td>
+            <td [ngStyle]="{
+                'background-color': getClassName(
+                  monthlyChange.day3.statusId.code
+                )
+              }"
+              (click)="edit(monthlyChange.day3, monthlyChange)">
+              {{ monthlyChange.day3?.statusId?.code }}
+            </td>
+            <td [ngStyle]="{
+                'background-color': getClassName(
+                  monthlyChange.day4.statusId.code
+                )
+              }"
+              (click)="edit(monthlyChange.day4, monthlyChange)">
+              {{ monthlyChange.day4?.statusId?.code }}
+            </td>
+            <td [ngStyle]="{
+                'background-color': getClassName(
+                  monthlyChange.day5.statusId.code
+                )
+              }"
+              (click)="edit(monthlyChange.day5, monthlyChange)">
+              {{ monthlyChange.day5?.statusId?.code }}
+            </td>
+            <td [ngStyle]="{
+                'background-color': getClassName(
+                  monthlyChange.day6.statusId.code
+                )
+              }"
+              (click)="edit(monthlyChange.day6, monthlyChange)">
+              {{ monthlyChange.day6?.statusId?.code }}
+            </td>
+            <td [ngStyle]="{
+                'background-color': getClassName(
+                  monthlyChange.day7.statusId.code
+                )
+              }"
+              (click)="edit(monthlyChange.day7, monthlyChange)">
+              {{ monthlyChange.day7?.statusId?.code }}
+            </td>
+            <td [ngStyle]="{
+                'background-color': getClassName(
+                  monthlyChange.day8.statusId.code
+                )
+              }"
+              (click)="edit(monthlyChange.day8, monthlyChange)">
+              {{ monthlyChange.day8?.statusId?.code }}
+            </td>
+            <td [ngStyle]="{
+                'background-color': getClassName(
+                  monthlyChange.day9.statusId.code
+                )
+              }"
+              (click)="edit(monthlyChange.day9, monthlyChange)">
+              {{ monthlyChange.day9?.statusId?.code }}
+            </td>
+            <td [ngStyle]="{
+                'background-color': getClassName(
+                  monthlyChange.day10.statusId.code
+                )
+              }"
+              (click)="edit(monthlyChange.day10, monthlyChange)">
+              {{ monthlyChange.day10?.statusId?.code }}
+            </td>
+            <td [ngStyle]="{
+                'background-color': getClassName(
+                  monthlyChange.day11.statusId.code
+                )
+              }"
+              (click)="edit(monthlyChange.day11, monthlyChange)">
+              {{ monthlyChange.day11?.statusId?.code }}
+            </td>
+            <td [ngStyle]="{
+                'background-color': getClassName(
+                  monthlyChange.day12.statusId.code
+                )
+              }"
+              (click)="edit(monthlyChange.day12, monthlyChange)">
+              {{ monthlyChange.day12?.statusId?.code }}
+            </td>
+            <td [ngStyle]="{
+                'background-color': getClassName(
+                  monthlyChange.day13.statusId.code
+                )
+              }"
+              (click)="edit(monthlyChange.day13, monthlyChange)">
+              {{ monthlyChange.day13?.statusId?.code }}
+            </td>
+            <td [ngStyle]="{
+                'background-color': getClassName(
+                  monthlyChange.day14.statusId.code
+                )
+              }"
+              (click)="edit(monthlyChange.day14, monthlyChange)">
+              {{ monthlyChange.day14?.statusId?.code }}
+            </td>
+            <td [ngStyle]="{
+                'background-color': getClassName(
+                  monthlyChange.day15.statusId.code
+                )
+              }"
+              (click)="edit(monthlyChange.day15, monthlyChange)">
+              {{ monthlyChange.day15?.statusId?.code }}
+            </td>
+            <td [ngStyle]="{
+                'background-color': getClassName(
+                  monthlyChange.day16.statusId.code
+                )
+              }"
+              (click)="edit(monthlyChange.day16, monthlyChange)">
+              {{ monthlyChange.day16?.statusId?.code }}
+            </td>
+            <td [ngStyle]="{
+                'background-color': getClassName(
+                  monthlyChange.day17.statusId.code
+                )
+              }"
+              (click)="edit(monthlyChange.day17, monthlyChange)">
+              {{ monthlyChange.day17?.statusId?.code }}
+            </td>
+            <td [ngStyle]="{
+                'background-color': getClassName(
+                  monthlyChange.day18.statusId.code
+                )
+              }"
+              (click)="edit(monthlyChange.day18, monthlyChange)">
+              {{ monthlyChange.day18?.statusId?.code }}
+            </td>
+            <td [ngStyle]="{
+                'background-color': getClassName(
+                  monthlyChange.day19.statusId.code
+                )
+              }"
+              (click)="edit(monthlyChange.day19, monthlyChange)">
+              {{ monthlyChange.day19?.statusId?.code }}
+            </td>
+            <td [ngStyle]="{
+                'background-color': getClassName(
+                  monthlyChange.day20.statusId.code
+                )
+              }"
+              (click)="edit(monthlyChange.day20, monthlyChange)">
+              {{ monthlyChange.day20?.statusId?.code }}
+            </td>
+            <td [ngStyle]="{
+                'background-color': getClassName(
+                  monthlyChange.day21.statusId.code
+                )
+              }"
+              (click)="edit(monthlyChange.day21, monthlyChange)">
+              {{ monthlyChange.day21?.statusId?.code }}
+            </td>
+            <td [ngStyle]="{
+                'background-color': getClassName(
+                  monthlyChange.day22.statusId.code
+                )
+              }"
+              (click)="edit(monthlyChange.day22, monthlyChange)">
+              {{ monthlyChange.day22?.statusId?.code }}
+            </td>
+            <td [ngStyle]="{
+                'background-color': getClassName(
+                  monthlyChange.day23.statusId.code
+                )
+              }"
+              (click)="edit(monthlyChange.day23, monthlyChange)">
+              {{ monthlyChange.day23?.statusId?.code }}
+            </td>
+            <td [ngStyle]="{
+                'background-color': getClassName(
+                  monthlyChange.day24.statusId.code
+                )
+              }"
+              (click)="edit(monthlyChange.day24, monthlyChange)">
+              {{ monthlyChange.day24?.statusId?.code }}
+            </td>
+            <td [ngStyle]="{
+                'background-color': getClassName(
+                  monthlyChange.day25.statusId.code
+                )
+              }"
+              (click)="edit(monthlyChange.day25, monthlyChange)">
+              {{ monthlyChange.day25?.statusId?.code }}
+            </td>
+            <td [ngStyle]="{
+                'background-color': getClassName(
+                  monthlyChange.day26.statusId.code
+                )
+              }"
+              (click)="edit(monthlyChange.day26, monthlyChange)">
+              {{ monthlyChange.day26?.statusId?.code }}
+            </td>
+            <td [ngStyle]="{
+                'background-color': getClassName(
+                  monthlyChange.day27.statusId.code
+                )
+              }"
+              (click)="edit(monthlyChange.day27, monthlyChange)">
+              {{ monthlyChange.day27?.statusId?.code }}
+            </td>
+            <td [ngStyle]="{
+                'background-color': getClassName(
+                  monthlyChange.day28.statusId.code
+                )
+              }"
+              (click)="edit(monthlyChange.day28, monthlyChange)">
+              {{ monthlyChange.day28?.statusId?.code }}
+            </td>
+            <td [ngStyle]="{
+                'background-color': getClassName(
+                  monthlyChange.day29.statusId.code
+                )
+              }"
+              (click)="edit(monthlyChange.day29, monthlyChange)">
+              {{ monthlyChange.day29?.statusId?.code }}
+            </td>
+            <td [ngStyle]="{
+                'background-color': getClassName(
+                  monthlyChange.day30.statusId.code
+                )
+              }"
+              (click)="edit(monthlyChange.day30, monthlyChange)">
+              {{ monthlyChange.day30?.statusId?.code }}
+            </td>
+            <td [ngStyle]="{
+                'background-color': getClassName(
+                  monthlyChange.day31.statusId.code
+                )
+              }"
+              (click)="edit(monthlyChange.day31, monthlyChange)">
+              {{ monthlyChange.day31?.statusId?.code }}
+            </td>
+            <td class="text-right" style="width: 50px;">
+              <button class="btn btn-sm" (click)="deleteMonthlyChange(monthlyChange)" style="background-color: transparent;">
+                <i class="fas fa-trash-alt" style="color: red;"></i>
+              </button>
+            </td>
+          </tr>
+        </ng-container>
+      </tbody>
+    </table>
+  </div>
 </div>

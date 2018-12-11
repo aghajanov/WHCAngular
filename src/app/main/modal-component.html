@@ -1,68 +1,79 @@
-<div class="modal-header">
+<div class="modal-header" style="width: 1000px;">
   <h4 class="modal-title">New Row</h4>
 
-  <button type="button" class="close" aria-label="Close" (click)="activeModal.dismiss('Cross click')">
-    <span aria-hidden="true">&times;</span>
+  <button type="button" class="close" style="outline: transparent;" aria-label="Close" (click)="activeModal.dismiss('Cross click')">
+    <span aria-hidden="false">&times;</span>
   </button>
 </div>
 
 
 <div class="modal-body">
-  <form (ngSubmit)="onSubmit();activeModal.close('Close click')">
+
+  <form #form="ngForm" (ngSubmit)="onSubmit(form);activeModal.close('Close click')">
     <div class="form-row">
-        <input type="hidden" [(ngModel)]="monthlyChange.id" name="id" class="form-control" id="id">
-      <div class="form-group col-md-6">
+      <div class="form-group col-md-4">
         <label for="statuses">Agent</label>
-        <select id="statuses" [(ngModel)]="monthlyChange.agentId.agentId" name="agentId" class="form-control">
+        <select id="statuses" [(ngModel)]="monthlyChange.agentId.agentId" required name="agentId" class="form-control">
+          <option [ngValue]="undefined" disabled selected>Select Agent</option>
           <option *ngFor="let agent of agents" [value]="agent.agentId">
+            <script>
+            </script>
             {{agent.name}}
           </option>
         </select>
-
-        <label for="inputAgentTo">Agent To</label>
-        <select id="inputAgentTo" [(ngModel)]="monthlyChange.day.agentTo" name="agentTo" class="form-control">
-          <option *ngFor="let agent of agents" [value]="agent.agentId">
-            {{agent.name}}
-          </option>
-        </select>
-
-
-        <label for="shiftFrom">Shift From</label>
-        <input type="text" [(ngModel)]="monthlyChange.day.shiftFrom" name="shiftFrom" class="form-control" id="shiftFrom">
-
-
       </div>
-
-      <div class="form-group col-md-6">
+      <div class="form-group col-md-4">
+        <label for="statuses">Date</label>
+        <date-picker (date-selected)="onDateFromSelected($event)" [current-date]="currentDate">
+          </date-picker>
+       
+      </div>
+      <div class="form-group col-md-4">
         <label for="statuses">Status</label>
-        <select id="statuses" [(ngModel)]="monthlyChange.day.statusId.id" name="statusId.id" class="form-control">
+        <select id="statuses" [(ngModel)]="monthlyChange.day.statusId.id" (change)="onChange($event.target.value)" name="statusId.id"
+          class="form-control">
           <option *ngFor="let sts of statuses" [value]="sts.id">
+            <script>
+            </script>
             {{sts.code}}
           </option>
         </select>
-
-        <label for="statuses">Date</label>
-
-        <form class="form-inline">
-          <div class="form-group">
-            <div class="input-group">
-              <input class="form-control" placeholder="yyyy-mm-dd" name="dp" [(ngModel)]="model" ngbDatepicker #d="ngbDatepicker">
-              <div class="input-group-append">
-                <button class="btn btn-outline-secondary calendar" (click)="d.toggle()" type="button"></button>
-              </div>
-            </div>
-          </div>
-        </form>
-        <label for="shiftTo">Shift To</label>
-        <input type="text" [(ngModel)]="monthlyChange.day.shiftTo" name="shiftTo" class="form-control" id="shiftTo">
-
-
       </div>
     </div>
 
+    <div class="form-row" *ngIf="isNdSelected">
+      <div class="form-group col-md-6">
+        <label for="inputAgentTo">Agent To</label>
+        <select id="inputAgentTo" [(ngModel)]="monthlyChange.day.agentTo" name="agentTo" class="form-control">
+
+          <option *ngFor="let agent of agents" [value]="agent.agentId">
+            {{agent.name}}
+          </option>
+        </select>
+      </div>
+      <div class="form-group col-md-3">
+        <label for="shiftFrom">Shift From</label>
+        <input type="text" placeholder="Add shift" [(ngModel)]="monthlyChange.day.shiftFrom" name="shiftFrom" class="form-control"
+          id="shiftFrom">
+      </div>
+      <div class="form-group col-md-3">
+        <label for="shiftTo">Shift To</label>
+        <input type="text" placeholder="Add shift" [(ngModel)]="monthlyChange.day.shiftTo" name="shiftTo" class="form-control"
+          id="shiftTo">
+      </div>
+    </div>
+
+
+    <div class="form-group">
+      <label for="comment">Comment</label>
+      <textarea class="form-control" rows="2" id="comment"></textarea>
+    </div>
+
+
     <div class="modal-footer">
-      <button type="submit" class="btn btn-primary">Save</button>
+      <button type="submit"  class="btn btn-primary">Save</button>
       <button type="button" class="btn btn-danger" (click)="activeModal.close('Close click')">Close</button>
     </div>
   </form>
+  
 </div>

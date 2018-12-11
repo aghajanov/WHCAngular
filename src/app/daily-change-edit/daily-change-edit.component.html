@@ -1,3 +1,54 @@
-<p>
-  daily-change-edit works!
-</p>
+<div class="modal-header">
+  <h4 class="modal-title">Edit Agent</h4>
+
+  <button type="button" class="close" aria-label="Close" (click)="activeModal.dismiss('Cross click')">
+    <span aria-hidden="true">&times;</span>
+  </button>
+</div>
+
+
+<div class="modal-body">
+  <form (ngSubmit)="onSubmit();activeModal.close('Close click')">
+    <div class="form-row">
+      <!-- <label for="id">Id</label> -->
+      <input type="hidden" [(ngModel)]="dailyChange.id" name="id" class="form-control" id="id">
+      <div class="form-group col-md-6">
+
+
+        <label for="statuses">Status</label>
+        <select id="statuses" [(ngModel)]="dailyChange.statusId.id" name="statusId.id" class="form-control">
+          <option *ngFor="let sts of statuses" [value]="sts.id">
+            {{sts.code}}
+          </option>
+        </select>
+
+
+
+        <label for="shiftFrom">Shift From</label>
+        <input type="text" [(ngModel)]="dailyChange.shiftFrom" name="shiftFrom" class="form-control" id="shiftFrom">
+
+
+      </div>
+
+      <div class="form-group col-md-6">
+
+        <label for="inputAgentTo">Agent To</label>
+        <select id="inputAgentTo" [(ngModel)]="dailyChange.agentTo" name="agentTo" class="form-control">
+          <option *ngFor="let agent of agents" [value]="agent.agentId">
+            {{agent.name}}
+          </option>
+        </select>
+
+        <label for="shiftTo">Shift To</label>
+        <input type="text" [(ngModel)]="dailyChange.shiftTo" name="shiftTo" class="form-control" id="shiftTo">
+
+
+      </div>
+    </div>
+
+    <div class="modal-footer">
+      <button type="submit"  class="btn btn-primary">Save</button>
+      <button type="button" class="btn btn-danger" (click)="activeModal.close('Close click')">Close</button>
+    </div>
+  </form>
+</div>

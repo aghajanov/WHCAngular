@@ -16,6 +16,7 @@ import { RouterModule } from "@angular/router";
 import { HomeComponent } from "./home/home.component";
 import { AuthGuard } from "src/shared/auth-guard.service";
 import { DailyChangeEditComponent } from "./daily-change-edit/daily-change-edit.component";
+import { DatePickerComponent } from "./date-picker/date-picker.component";
 
 @NgModule({
   declarations: [
@@ -23,9 +24,10 @@ import { DailyChangeEditComponent } from "./daily-change-edit/daily-change-edit.
     NgbdModalContent,
     LoginComponent,
     HomeComponent,
-    DailyChangeEditComponent
+    DailyChangeEditComponent,
+    DatePickerComponent
   ],
-  entryComponents: [NgbdModalContent],
+  entryComponents: [NgbdModalContent, DailyChangeEditComponent],
   imports: [
     BrowserModule,
     AppRoutingModule,

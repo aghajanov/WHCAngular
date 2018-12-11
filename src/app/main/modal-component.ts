@@ -1,3 +1,5 @@
+import { DailyChange } from './../../shared/daily-change';
+import { Status } from './../../shared/statuses';
 import { UserActions } from "../../shared/user-actions";
 import { Component, Input, OnInit } from "@angular/core";
 import {
@@ -9,10 +11,11 @@ import {
 } from "@ng-bootstrap/ng-bootstrap";
 import { AppService } from "src/shared/service";
 import { Agent } from "src/shared/agent";
-import { Status } from "src/shared/statuses";
+
 import { MonthlyChanges } from "src/shared/monthlychange";
 import { MonthlyChangesViewModel } from "src/shared/monthly-change-view-model";
-import { DailyChange } from "src/shared/daily-change";
+import { Daily } from '../daily-change-edit/daily';
+
 
 @Component({
   selector: "ngbd-modal-content",
@@ -25,17 +28,23 @@ export class NgbdModalContent implements OnInit {
   userCreated: string;
   statuses: Status[] = [];
   model: NgbDateStruct;
-
+  currentDate: NgbDate;
+  monthlyChanges: MonthlyChanges[] = [];
+  currentStatus;
   constructor(
     public activeModal: NgbActiveModal,
     private service: AppService,
     private calendar: NgbCalendar
   ) {
+    let now = new Date();
+    this.currentDate = new NgbDate(now.getFullYear(), now.getMonth(), now.getDay()); 
     this.monthlyChange = new MonthlyChangesViewModel();
   }
-
+  getLastDayOfMonth(y, m) {
+    return new Date(y, m + 1, 0).getDate();
+  }
   ngOnInit() {
-    console.log("", this.monthlyChange);
+    console.log("hzgd" + this.monthlyChange.day.statusId.id)
     this.service.getAgents().subscribe(
       data => {
         this.agents = data;
@@ -50,17 +59,25 @@ export class NgbdModalContent implements OnInit {
       error => {}
     );
   }
+
+  onDateFromSelected(currentDate: NgbDate) {
+    this.currentDate = currentDate;
+  }
+
   @Input() name;
 
-  onSubmit() {
+  onSubmit(form) {
+
+
     let mc = this.getMonthlyChange();
-    console.log("mc>>>", mc);
+    console.log('xxxxxxxx',form);
 
     this.service
       .getCheckedMonthlyChanges(
         mc.agentId.agentId,
         mc.dateCreated[0],
-        mc.dateCreated[1]
+        mc.dateCreated[1],
+        mc.status= true
       )
       .subscribe(
         x => {
@@ -73,40 +90,48 @@ export class NgbdModalContent implements OnInit {
             // mc.id = x.id;
             // this.service.updateMonthlyChanges(mc).subscribe(x => {});
           } else {
+            
             console.log("if(mc) >", mc);
             this.saveNewmonthlyChange(mc);
+          
           }
         },
         error => {
+          console.log(error);
           this.saveNewmonthlyChange(mc);
         }
       );
   }
 
   private saveNewmonthlyChange(mc: MonthlyChanges) {
+
     this.service.saveMonthlyChanges(mc).subscribe(monthlyChng => {
       console.log(monthlyChng);
       let date = new Date();
+      // let dc=new Daily();
+      // let dailyChange = new DailyChange();
+     
       let userActions = new UserActions();
       userActions.userId = this.service.getCurrentUser;
       userActions.dateChanged = [
         monthlyChng.dateCreated[0],
         monthlyChng.dateCreated[1],
         monthlyChng.dateCreated[2],
-        0,
-        0
+        monthlyChng.dateCreated[3],
+        monthlyChng.dateCreated[4],
       ];
       userActions.dateCreated = [
-        date.getFullYear(),
-        date.getMonth(),
-        date.getDay(),
-        0,
-        0
+        date.getFullYear()+0,
+        date.getMonth() + 1,
+        date.getDay()+2,
+        date.getHours(),
+        date.getMinutes(),
+        date.getSeconds(),
       ];
       userActions.monthlyChangesId = monthlyChng;
-      userActions.statusFrom = 2;
-      userActions.statusTo = 5;
-      console.log(JSON.stringify(userActions));
+      userActions.statusFrom =this.monthlyChange.day.statusId.id;
+      userActions.statusTo =  this.monthlyChange.day.statusId.id;
+      console.log('userAction',userActions);
       this.service
         .postUserActions(userActions)
         .subscribe(
@@ -114,6 +139,12 @@ export class NgbdModalContent implements OnInit {
           error => console.log("error", error)
         );
     });
+  }
+
+  isNdSelected:boolean;
+  onChange(value){
+    this.isNdSelected=(value==1)
+    // alert(this.isNdSelected);
   }
 
   getMonthlyChange(): MonthlyChanges {
@@ -232,5 +263,15 @@ export class NgbdModalContent implements OnInit {
     mc.agentId = agent[0];
     mc.id = this.monthlyChange.id;
     return mc;
+  }
+
+
+  private LoadWhc() {
+    this.service.getMonthlyChanges().subscribe(
+      data => {
+        this.monthlyChanges = data;
+      },
+      error => {}
+    );
   }
 }

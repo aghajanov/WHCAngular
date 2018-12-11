@@ -1,0 +1,16 @@
+td{
+    padding: 0;
+    text-align: center;
+    line-height: 35px;
+    cursor: pointer;
+}
+
+th{
+  width: 160px;
+}
+
+.rectangle{
+  width: 20px;
+  height: 20px;
+  padding-bottom: 2px;
+}

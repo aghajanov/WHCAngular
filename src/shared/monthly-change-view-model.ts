@@ -12,13 +12,14 @@ export class MonthlyChangesViewModel{
    dateCreated: number[];
    lastUpdatedUser:number;
    lastUpdatedDate:number;
-   day:DailyChange
+   day:DailyChange;
+  
 
    /**
     *
     */
    constructor() {
-      this.id=0;
+    this.id=0;
     this.agentId=new Agent();
     this.day=new DailyChange();
    }

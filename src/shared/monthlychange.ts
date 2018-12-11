@@ -6,6 +6,7 @@ export class MonthlyChanges {
   agentId: Agent;
   year: number;
   month: number;
+  status:boolean;
   userCreated: number;
   dateCreated: number[];
   lastUpdatedUser: number;

@@ -1,11 +1,14 @@
+import { MonthlyChanges } from 'src/shared/monthlychange';
+import { Daily } from './../app/daily-change-edit/daily';
 import { UserActions } from './user-actions';
 import { HttpClient } from "@angular/common/http";
 import { Agent } from "./agent";
 import { Injectable } from "@angular/core";
 import { Status } from "./statuses";
-import { MonthlyChanges } from "./monthlychange";
+
 import { MonthlyChangesViewModel } from "./monthly-change-view-model";
 import { User } from "./user";
+import { NgbDate } from '@ng-bootstrap/ng-bootstrap';
 
 @Injectable()
 export class AppService {
@@ -30,10 +33,16 @@ export class AppService {
   getMonthlyChanges() {
     return this._http.get<MonthlyChanges[]>(this.baseUrl + "/monthlychanges");
   }
+  
+  getMonthes(start:string , end:string){
+    return this._http.get<MonthlyChanges[]>(this.baseUrl + "/monthlychanges/" + start + "/" + end);
+  }
 
-  getCheckedMonthlyChanges(agentId:number, year:number,month:number){
-    console.log(this.baseUrl + "/checked/" + agentId +'/'+ year+'/'+month);
-    return this._http.get<MonthlyChanges>(this.baseUrl + "/checked/" + agentId +'/'+ year+'/'+month);
+
+
+  getCheckedMonthlyChanges(agentId:number, year:number,month:number,status:boolean ){
+    console.log(this.baseUrl + "/checked/" + agentId +'/'+ year+'/'+month + '/' + status);
+    return this._http.get<MonthlyChanges>(this.baseUrl + "/checked/" + agentId +'/'+ year+'/'+month + '/' + status);
   }
 
   saveMonthlyChanges(monthlychanges: MonthlyChanges) {
@@ -43,25 +52,37 @@ export class AppService {
     );
   }
   updateMonthlyChanges(monthlychanges: MonthlyChanges) {
-
     return this._http.put<MonthlyChanges>(
       this.baseUrl + "/monthlychanges/" + monthlychanges.id,
       monthlychanges
     );
   }
-  deleteMonthlyChange(id: number) {
-      console.log(id);
-    return this._http.delete(this.baseUrl + "/monthlychanges/" + id);
+
+  updateDaily(daily:Daily){
+    return this._http.put<Daily>("http://localhost:8080/daily/" + daily.id , daily);
+  }
+
+
+  putStatus(id:number,status:boolean) {
+    return this._http.put("http://localhost:8080/monthlychanges/" + id +"/" + false , status);
   }
   
   postUserActions(useractions:UserActions){
     return this._http.post<UserActions>(this.baseUrl + "/useractions" , useractions);
 
   }
-
-  getMonthly(id: number) {
-    return this._http.get(this.baseUrl + "/monthlychanges/" + id);
+  getUserActions(useractions:UserActions){
+    return this._http.get(this.baseUrl + "/useractions" + useractions);
   }
+  // postStatusFrom(statusFrom:UserActions){
+  //   return this._http.
+
+  // }
+  
+  
+  // getMonthly(id: number) {
+  //   return this._http.get(this.baseUrl + "/monthlychanges/" + id);
+  // }
 
   getStatuses() {
     return this._http.get<Status[]>(this.baseUrl + "/statuses");
