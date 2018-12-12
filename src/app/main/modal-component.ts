@@ -37,11 +37,11 @@ export class NgbdModalContent implements OnInit {
     private calendar: NgbCalendar
   ) {
     let now = new Date();
-    this.currentDate = new NgbDate(now.getFullYear(), now.getMonth(), now.getDay()); 
+    this.currentDate = new NgbDate(now.getFullYear() , now.getMonth(), now.getDay()); 
     this.monthlyChange = new MonthlyChangesViewModel();
   }
   getLastDayOfMonth(y, m) {
-    return new Date(y, m + 1, 0).getDate();
+    return new Date(y, m +1, 0).getDate();
   }
   ngOnInit() {
     console.log("hzgd" + this.monthlyChange.day.statusId.id)
@@ -61,7 +61,9 @@ export class NgbdModalContent implements OnInit {
   }
 
   onDateFromSelected(currentDate: NgbDate) {
+    
     this.currentDate = currentDate;
+    console.log("crcrcrda" ,this.currentDate);
   }
 
   @Input() name;
@@ -150,14 +152,16 @@ export class NgbdModalContent implements OnInit {
   getMonthlyChange(): MonthlyChanges {
     let dc = new DailyChange();
     console.log(this.monthlyChange);
+    
     dc.agentTo = this.monthlyChange.day.agentTo;
     dc.shiftFrom = this.monthlyChange.day.shiftFrom;
     dc.shiftTo = this.monthlyChange.day.shiftTo;
     dc.statusId = this.monthlyChange.day.statusId;
 
     let mc = new MonthlyChanges();
-    mc.dateCreated = [this.model.year, this.model.month, this.model.day, 0, 0];
-    switch (this.model.day) {
+
+    mc.dateCreated = [this.currentDate.year, this.currentDate.month, this.currentDate.day, 0, 0];
+    switch (this.currentDate.day) {
       case 1:
         mc.day1 = dc;
         break;
@@ -255,8 +259,8 @@ export class NgbdModalContent implements OnInit {
         return null;
     }
     mc.userCreated = this.service.getCurrentUser;
-    mc.year = this.model.year;
-    mc.month = this.model.month;
+    mc.year = this.currentDate.year;
+    mc.month = this.currentDate.month;
     let agent = this.agents.filter(
       x => x.agentId == this.monthlyChange.agentId.agentId
     );

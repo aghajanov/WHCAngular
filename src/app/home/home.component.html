@@ -148,8 +148,8 @@
   </div>
   <div class="row">&nbsp;</div>
  
-  <div class="row">
-    <table class="table table-bordered table-sm table-responsive">
+  <div class="row" >
+    <table class="table table-bordered table-sm table-responsive" >
       <thead>
         <tr>
           <th>Agents</th>
@@ -189,15 +189,15 @@
       </thead>
 
       <tbody>
-        <ng-container *ngFor="let monthlyChange of monthlyChanges">
-          <tr *ngIf="monthlyChange.status" >
-            <td  style="width:700px;">{{ monthlyChange.agentId?.name }}</td>
+        <ng-container    *ngFor="let monthlyChange of monthlyChanges">
+          <tr *ngIf="monthlyChange.status"  >
+            <td   style="width:700px;">{{ monthlyChange.agentId?.name }}</td>
             <td [ngStyle]="{
                 'background-color': getClassName(
                   monthlyChange.day1.statusId.code
                 )
               }"
-              (click)="edit(monthlyChange.day1, monthlyChange)">
+               (click)="edit(monthlyChange.day1, monthlyChange)">
               {{ monthlyChange.day1?.statusId?.code }}
             </td>
             <td [ngStyle]="{

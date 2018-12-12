@@ -60,7 +60,15 @@ export class DailyChangeEditComponent implements OnInit {
       },
       error => {}
     );
+  }  
+
+
+  isNdSelected:boolean;
+  onChange(value){
+    this.isNdSelected=(value==1)
+    // alert(this.isNdSelected);
   }
+
   onSubmit() {
     console.log(this.dailyChange);
 
@@ -69,7 +77,7 @@ export class DailyChangeEditComponent implements OnInit {
     (dc.id = this.dailyChange.id), (dc.shiftFrom = this.dailyChange.shiftFrom);
     dc.shiftTo = this.dailyChange.shiftFrom;
     dc.statusId = this.dailyChange.statusId.id;
-
+  
     this.service.updateDaily(dc).subscribe(
       data => {
         //  dc = data;

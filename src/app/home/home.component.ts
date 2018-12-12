@@ -118,6 +118,8 @@ export class HomeComponent implements OnInit {
     return this.backgroundColor;
   }
 
+ 
+
   edit(day: DailyChange, monthlyChanges: MonthlyChanges) {
     console.log("day" , day);
     const modalRef = this.modalService.open(DailyChangeEditComponent);
@@ -182,6 +184,13 @@ export class HomeComponent implements OnInit {
       d.getMinutes(),
       d.getSeconds()
     ];
+    this.service.updateMonthlyChanges(monthlyChanges).subscribe(
+     data =>{console.log(data)},
+     error => {console.log(error)}
+
+
+    )
+
   }
 
   private LoadWhc() {
