@@ -8,7 +8,8 @@ import {
   NgbCalendar,
   NgbDateStruct,
   NgbDate
-} from "@ng-bootstrap/ng-bootstrap";
+}
+from "@ng-bootstrap/ng-bootstrap";
 import { AppService } from "src/shared/service";
 import { Agent } from "src/shared/agent";
 
@@ -37,14 +38,14 @@ export class NgbdModalContent implements OnInit {
     private calendar: NgbCalendar
   ) {
     let now = new Date();
-    this.currentDate = new NgbDate(now.getFullYear() , now.getMonth(), now.getDay()); 
+    this.currentDate = new NgbDate(now.getFullYear() , now.getMonth()+1, now.getDay()+9); 
     this.monthlyChange = new MonthlyChangesViewModel();
   }
   getLastDayOfMonth(y, m) {
     return new Date(y, m +1, 0).getDate();
   }
   ngOnInit() {
-    console.log("hzgd" + this.monthlyChange.day.statusId.id)
+   
     this.service.getAgents().subscribe(
       data => {
         this.agents = data;
@@ -55,6 +56,7 @@ export class NgbdModalContent implements OnInit {
     this.service.getStatuses().subscribe(
       data => {
         this.statuses = data;
+        console.log("statuses" + this.statuses)
       },
       error => {}
     );
@@ -72,7 +74,7 @@ export class NgbdModalContent implements OnInit {
 
 
     let mc = this.getMonthlyChange();
-    console.log('xxxxxxxx',form);
+ 
 
     this.service
       .getCheckedMonthlyChanges(
@@ -108,7 +110,6 @@ export class NgbdModalContent implements OnInit {
   private saveNewmonthlyChange(mc: MonthlyChanges) {
 
     this.service.saveMonthlyChanges(mc).subscribe(monthlyChng => {
-      console.log(monthlyChng);
       let date = new Date();
       // let dc=new Daily();
       // let dailyChange = new DailyChange();
@@ -120,15 +121,15 @@ export class NgbdModalContent implements OnInit {
         monthlyChng.dateCreated[1],
         monthlyChng.dateCreated[2],
         monthlyChng.dateCreated[3],
-        monthlyChng.dateCreated[4],
+      
       ];
       userActions.dateCreated = [
         date.getFullYear()+0,
         date.getMonth() + 1,
-        date.getDay()+2,
+        date.getDay() + 9,
         date.getHours(),
         date.getMinutes(),
-        date.getSeconds(),
+        
       ];
       userActions.monthlyChangesId = monthlyChng;
       userActions.statusFrom =this.monthlyChange.day.statusId.id;
@@ -152,15 +153,14 @@ export class NgbdModalContent implements OnInit {
   getMonthlyChange(): MonthlyChanges {
     let dc = new DailyChange();
     console.log(this.monthlyChange);
-    
     dc.agentTo = this.monthlyChange.day.agentTo;
     dc.shiftFrom = this.monthlyChange.day.shiftFrom;
     dc.shiftTo = this.monthlyChange.day.shiftTo;
     dc.statusId = this.monthlyChange.day.statusId;
 
     let mc = new MonthlyChanges();
-
     mc.dateCreated = [this.currentDate.year, this.currentDate.month, this.currentDate.day, 0, 0];
+    console.log("asfs",this.dateCreated)
     switch (this.currentDate.day) {
       case 1:
         mc.day1 = dc;

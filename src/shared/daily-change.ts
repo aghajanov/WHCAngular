@@ -12,7 +12,6 @@ export class DailyChange {
         this.statusId=new Status();
         // let daily  = new Daily();
         // this.statusId.id=daily.shiftFrom;
-        this.statusId.id=0;
-        this.statusId.id=0;
+        this.statusId.id=11;
     }
 }

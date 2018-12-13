@@ -43,7 +43,8 @@ export class HomeComponent implements OnInit {
     config: NgbPopoverConfig,
     private rout: Router,
     private parserFormatter: NgbDateParserFormatter
-  ) {
+  )
+   {
     config.placement = "right";
     config.triggers = "hover";
     this.monthlyChange = new MonthlyChangesViewModel();
@@ -54,10 +55,24 @@ export class HomeComponent implements OnInit {
     this.dateFrom = new NgbDate(now.getFullYear(), now.getMonth() + 1, 1);
 
     this.dateTo = new NgbDate(now.getFullYear(), now.getMonth() + 1, lastday);
-    console.log("dateFrom", this.dateFrom);
-    console.log("dateTo", this.dateTo);
   }
 
+  ngOnInit() {
+    this.service.getStatuses().subscribe(data => {  
+      this.statuses = data;
+      
+    });
+           
+    this.service.getAgents().subscribe(
+      data => {  
+        this.agents = data;
+        // this.LoadWhc();
+      },
+      error => {}
+    );
+
+    this.LoadWhc();
+  }
   getLastDayOfMonth(y, m) {
     return new Date(y, m + 1, 0).getDate();
   }
@@ -140,19 +155,7 @@ export class HomeComponent implements OnInit {
     );
   }
 
-  ngOnInit() {
-    this.service.getStatuses().subscribe(data => {
-      this.statuses = data;
-    });
-
-    this.LoadWhc();
-    this.service.getAgents().subscribe(
-      data => {
-        this.agents = data;
-      },
-      error => {}
-    );
-  }
+ 
 
   logOff(form: HTMLFormElement) {
     localStorage.removeItem("userId");
@@ -185,15 +188,23 @@ export class HomeComponent implements OnInit {
       d.getSeconds()
     ];
     this.service.updateMonthlyChanges(monthlyChanges).subscribe(
-     data =>{console.log(data)},
-     error => {console.log(error)}
+      data =>{console.log(data)},
+      error => {console.log(error)}
 
 
     )
 
   }
 
-  private LoadWhc() {
+  private  LoadWhc() {
+    // this.service.getMonthlyChanges().subscribe(
+    //   data => {
+    //     console.log(data);
+    //     this.monthlyChanges = data;
+    //   },
+    //   error => {       
+    //   }
+    // );
     this.getMonthes();
   }
 
@@ -230,7 +241,9 @@ export class HomeComponent implements OnInit {
 
     this.service.getMonthes(startDate, endDate).subscribe(
       data => {
+        console.log('data',data);
         this.monthlyChanges = data;
+        console.log("sjs" , this.monthlyChanges)
       },
       error => {
         console.log(error);
