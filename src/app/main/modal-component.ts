@@ -126,7 +126,7 @@ export class NgbdModalContent implements OnInit {
       userActions.dateCreated = [
         date.getFullYear()+0,
         date.getMonth() + 1,
-        date.getDay() + 9,
+        date.getDay(),
         date.getHours(),
         date.getMinutes(),
         
