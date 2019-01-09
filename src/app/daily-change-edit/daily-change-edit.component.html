@@ -10,7 +10,7 @@
   
   <div class="modal-body">
   
-    <form #form="ngForm" (ngSubmit)="onSubmit(form);activeModal.close('Close click')">
+    <form #form="ngForm" (ngSubmit)="onSubmit();activeModal.close('Close click')">
       <div class="form-row">
    
         <div class="form-group col-md-4">
@@ -24,6 +24,13 @@
             </option>
           </select>
         </div>
+
+        <div class="form-group col-md-3">
+          <label for="shiftTo">Period</label>
+          <input type="text" placeholder="Add Period" [(ngModel)]="dailyChange.shiftTo" name="shiftTo" class="form-control"
+            id="shiftTo">
+        </div>
+
       </div>
   
       <div class="form-row" *ngIf="isNdSelected">
@@ -46,13 +53,16 @@
           <input type="text" placeholder="Add shift" [(ngModel)]="dailyChange.shiftTo" name="shiftTo" class="form-control"
             id="shiftTo">
         </div>
+
+       
+
       </div>
   
   
-      <!-- <div class="form-group">
+      <div class="form-group">
         <label for="comment">Comment</label>
-        <textarea class="form-control" rows="2" id="comment"></textarea>
-      </div> -->
+        <textarea class="form-control" [(ngModel)]="dailyChange.comment" name="comment" class="form-control"></textarea>
+      </div>
   
   
       <div class="modal-footer">

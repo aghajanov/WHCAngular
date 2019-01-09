@@ -1,3 +1,4 @@
+
 import { DailyChange } from './../../shared/daily-change';
 import { Status } from './../../shared/statuses';
 import { UserActions } from "../../shared/user-actions";
@@ -30,7 +31,8 @@ export class NgbdModalContent implements OnInit {
   statuses: Status[] = [];
   model: NgbDateStruct;
   currentDate: NgbDate;
-  monthlyChanges: MonthlyChanges[] = [];
+  period: number = 5;
+ public monthlyChanges: MonthlyChanges[] = [];
   currentStatus;
   constructor(
     public activeModal: NgbActiveModal,
@@ -46,6 +48,7 @@ export class NgbdModalContent implements OnInit {
   }
   ngOnInit() {
    
+
     this.service.getAgents().subscribe(
       data => {
         this.agents = data;
@@ -71,11 +74,8 @@ export class NgbdModalContent implements OnInit {
   @Input() name;
 
   onSubmit(form) {
-
-
     let mc = this.getMonthlyChange();
- 
-
+    
     this.service
       .getCheckedMonthlyChanges(
         mc.agentId.agentId,
@@ -94,7 +94,7 @@ export class NgbdModalContent implements OnInit {
             // mc.id = x.id;
             // this.service.updateMonthlyChanges(mc).subscribe(x => {});
           } else {
-            
+     
             console.log("if(mc) >", mc);
             this.saveNewmonthlyChange(mc);
           
@@ -108,11 +108,33 @@ export class NgbdModalContent implements OnInit {
   }
 
   private saveNewmonthlyChange(mc: MonthlyChanges) {
-
+         
+         
     this.service.saveMonthlyChanges(mc).subscribe(monthlyChng => {
+      if (this.period > 0){
+             for(let i= 0 ; i<=this.period;i++){
+                let dc = this.monthlyChange.day;
+                let daily = new Daily();
+                daily.agentTo = dc.agentTo
+                daily.comment = dc.comment;
+                daily.id = dc.id;
+                daily.shiftFrom = dc.shiftFrom;
+                daily.shiftTo= dc.shiftTo;
+                daily.statusId = dc.statusId.id;
+              
+                this.service.updateDaily(daily).subscribe(
+                  data => {console.log(data)},
+                  error =>{console.log(error)} 
+                )
+                
+              
+             }
+      } 
+     
+
+
       let date = new Date();
-      // let dc=new Daily();
-      // let dailyChange = new DailyChange();
+      
      
       let userActions = new UserActions();
       userActions.userId = this.service.getCurrentUser;
@@ -121,20 +143,22 @@ export class NgbdModalContent implements OnInit {
         monthlyChng.dateCreated[1],
         monthlyChng.dateCreated[2],
         monthlyChng.dateCreated[3],
-      
+        monthlyChng.dateCreated[4],
       ];
       userActions.dateCreated = [
         date.getFullYear()+0,
         date.getMonth() + 1,
-        date.getDay(),
-        date.getHours(),
-        date.getMinutes(),
+        date.getDay() + 9,
+        0,
+    
+        
         
       ];
       userActions.monthlyChangesId = monthlyChng;
       userActions.statusFrom =this.monthlyChange.day.statusId.id;
       userActions.statusTo =  this.monthlyChange.day.statusId.id;
       console.log('userAction',userActions);
+
       this.service
         .postUserActions(userActions)
         .subscribe(
@@ -142,6 +166,9 @@ export class NgbdModalContent implements OnInit {
           error => console.log("error", error)
         );
     });
+
+     
+
   }
 
   isNdSelected:boolean;
@@ -157,10 +184,11 @@ export class NgbdModalContent implements OnInit {
     dc.shiftFrom = this.monthlyChange.day.shiftFrom;
     dc.shiftTo = this.monthlyChange.day.shiftTo;
     dc.statusId = this.monthlyChange.day.statusId;
-
+    dc.comment = this.monthlyChange.day.comment;
+    
     let mc = new MonthlyChanges();
     mc.dateCreated = [this.currentDate.year, this.currentDate.month, this.currentDate.day, 0, 0];
-    console.log("asfs",this.dateCreated)
+    
     switch (this.currentDate.day) {
       case 1:
         mc.day1 = dc;
@@ -261,6 +289,7 @@ export class NgbdModalContent implements OnInit {
     mc.userCreated = this.service.getCurrentUser;
     mc.year = this.currentDate.year;
     mc.month = this.currentDate.month;
+   
     let agent = this.agents.filter(
       x => x.agentId == this.monthlyChange.agentId.agentId
     );

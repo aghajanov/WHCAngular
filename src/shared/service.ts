@@ -26,7 +26,7 @@ export class AppService {
 
   getMonthlyChange(id: number) {
     return this._http.get<MonthlyChanges[]>(
-      this.baseUrl + "/monthlychanges/" + id
+      this.baseUrl + "monthlychanges/" + id
     );
   }
 
@@ -41,7 +41,7 @@ export class AppService {
 
 
   getCheckedMonthlyChanges(agentId:number, year:number,month:number,status:boolean ){
-    console.log(this.baseUrl + "/checked/" + agentId +'/'+ year+'/'+month + '/' + status);
+    console.log(this.baseUrl + "checked/" + agentId +'/'+ year+'/'+month + '/' + status);
     return this._http.get<MonthlyChanges>(this.baseUrl + "/checked/" + agentId +'/'+ year+'/'+month + '/' + status);
   }
 
@@ -74,15 +74,6 @@ export class AppService {
   getUserActions(useractions:UserActions){
     return this._http.get(this.baseUrl + "/useractions" + useractions);
   }
-  // postStatusFrom(statusFrom:UserActions){
-  //   return this._http.
-
-  // }
-  
-  
-  // getMonthly(id: number) {
-  //   return this._http.get(this.baseUrl + "/monthlychanges/" + id);
-  // }
 
   getStatuses() {
     return this._http.get<Status[]>(this.baseUrl + "/statuses");

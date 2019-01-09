@@ -4,4 +4,5 @@ export class Daily {
   agentTo: string;
   shiftFrom: number;
   shiftTo: number;
+  comment: string;
 }

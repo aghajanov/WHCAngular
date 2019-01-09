@@ -1,3 +1,4 @@
+import { MonthlyChangesViewModel } from './../../shared/monthly-change-view-model';
 import { MonthlyChanges } from "src/shared/monthlychange";
 import { UserActions } from "../../shared/user-actions";
 import { Component, Input, OnInit } from "@angular/core";
@@ -21,6 +22,7 @@ import { Daily } from "./daily";
 })
 export class DailyChangeEditComponent implements OnInit {
   agents: Agent[] = [];
+  public monthlyChanges: MonthlyChangesViewModel
   public dailyChange: DailyChange;
   public monthlyChange: MonthlyChanges;
   dateCreated: string;
@@ -70,18 +72,21 @@ export class DailyChangeEditComponent implements OnInit {
   }
 
   onSubmit() {
-    console.log(this.dailyChange);
-
+    
+    let mc = new MonthlyChanges();
     let dc = new Daily();
+   
     dc.agentTo = this.dailyChange.agentTo;
-    (dc.id = this.dailyChange.id), (dc.shiftFrom = this.dailyChange.shiftFrom);
-    dc.shiftTo = this.dailyChange.shiftFrom;
+    (dc.id = this.dailyChange.id), 
+    (dc.shiftFrom = this.dailyChange.shiftFrom);
+    dc.shiftTo = this.dailyChange.shiftTo;
     dc.statusId = this.dailyChange.statusId.id;
-  
+    dc.comment = this.dailyChange.comment;
+    
+   
     this.service.updateDaily(dc).subscribe(
       data => {
-        //  dc = data;
-        //  console.log(this.dailyChange.id);
+       
         let userAction = new UserActions();
         let now = new Date();
         userAction.dateCreated = [
@@ -116,5 +121,10 @@ export class DailyChangeEditComponent implements OnInit {
       }
     ),error=>console.log(error);
     
+
+   
+
+
+
   }
 }

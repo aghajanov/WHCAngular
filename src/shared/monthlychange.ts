@@ -47,7 +47,8 @@ export class MonthlyChanges {
    *
    */
   constructor() {
-     this.id=0;
+
+    this.id=0;
     this.day1 = new DailyChange();
     this.day2 = new DailyChange();
     this.day3 = new DailyChange();

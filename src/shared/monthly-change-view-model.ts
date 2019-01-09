@@ -13,6 +13,7 @@ export class MonthlyChangesViewModel{
    lastUpdatedUser:number;
    lastUpdatedDate:number;
    day:DailyChange;
+   
   
 
    /**

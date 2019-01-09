@@ -157,10 +157,10 @@ export class HomeComponent implements OnInit {
 
  
 
-  logOff(form: HTMLFormElement) {
+  logOff() {
     localStorage.removeItem("userId");
     this.rout.navigateByUrl("");
-    form.reset();
+    // form.reset();
   }
 
   deleteMonthlyChange(monthlyChanges: MonthlyChanges) {
@@ -187,6 +187,7 @@ export class HomeComponent implements OnInit {
       d.getMinutes(),
       d.getSeconds()
     ];
+   
     this.service.updateMonthlyChanges(monthlyChanges).subscribe(
       data =>{console.log(data)},
       error => {console.log(error)}

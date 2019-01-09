@@ -7,6 +7,7 @@ export class DailyChange {
     agentTo: string;
     shiftFrom: number;
     shiftTo: number;
+    comment:string;
 
     constructor() {
         this.statusId=new Status();
